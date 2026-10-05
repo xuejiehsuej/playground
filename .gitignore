@@ -1,0 +1,7 @@
+node_modules/
+docs/qa/
+.env*
+*.private.json
+task_plan.md
+findings.md
+progress.md

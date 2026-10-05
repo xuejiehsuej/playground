@@ -1,0 +1,9 @@
+import {createRequire} from 'node:module';
+import {mkdir,writeFile} from 'node:fs/promises';
+const require=createRequire(import.meta.url),{chromium}=require('C:/Users/86137/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+await mkdir('docs/qa/refinement',{recursive:true});
+const browser=await chromium.launch({headless:true,channel:'msedge',args:['--enable-webgl','--ignore-gpu-blocklist']});
+const page=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:1});const errors=[],report=[];page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+try{await page.goto('http://127.0.0.1:4180/?debug=1');await page.waitForFunction(()=>document.querySelector('canvas').dataset.ready==='true');await page.waitForTimeout(3000);
+for(const id of ['hub','digital','ocean','infinity']){if(id!=='hub'){await page.locator(`.space-link[data-space=${id}]`).click();await page.waitForFunction(id=>document.body.dataset.space===id,id);await page.waitForTimeout(2000);}await page.screenshot({path:`docs/qa/refinement/${id}-wide.png`});report.push({id,model:JSON.parse(await page.locator('canvas').getAttribute('data-model')),performance:await page.locator('#debug').textContent()});await page.locator('#viewpoints button').nth(id==='digital'?1:2).click();await page.waitForTimeout(1900);await page.screenshot({path:`docs/qa/refinement/${id}-close.png`});if(id==='digital'){await page.waitForTimeout(1300);await page.screenshot({path:'docs/qa/refinement/digital-flow-later.png'});}if(id==='ocean'){await page.locator('#viewpoints button').nth(1).click();await page.waitForTimeout(1900);await page.screenshot({path:'docs/qa/refinement/ocean-underwater.png'});}}
+await writeFile('docs/qa/refinement/report.json',JSON.stringify({report,errors},null,2));console.log(JSON.stringify({report,errors},null,2));}finally{await browser.close();}

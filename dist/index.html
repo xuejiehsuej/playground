@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1318"><meta name="description" content="Sovue Playground — 游走于工业深空、数字无界、汪洋与无限城之间的空间实验馆。"><title>PLAYGROUND — Sovue 空间实验馆</title><link rel="icon" href="./favicon.svg"><link rel="stylesheet" href="./style.css"><script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script></head>
+<body data-space="hub">
+<main id="experience" aria-label="可交互的三维展馆">
+  <canvas id="world" tabindex="0" aria-label="三维空间。拖动旋转，滚轮前进，Shift 加拖动平移。键盘 W A S D 移动，R F 升降，Q E 翻转，Home 恢复视角。"></canvas>
+  <div class="vignette" aria-hidden="true"></div><div class="frame-corner tl" aria-hidden="true"></div><div class="frame-corner br" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#hub" aria-label="Sovue Playground 返回主馆"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m4 25 12-21 12 21h-7l-5-9-5 9z"/></svg><span>SOVUE<span class="brand-sub">PLAYGROUND</span></span></a>
+    <div class="top-location"><span class="status-dot"></span> INDEPENDENT SPACE ARCHIVE <span class="divider">/</span> EST. 2026</div>
+    <nav class="header-actions" aria-label="主要导航"><button id="collection-open">作品索引 <span class="count">00</span></button><button id="map-open" class="icon-button" aria-label="打开展馆地图"><svg viewBox="0 0 24 24"><path d="M3 3h6v6H3zm12 0h6v6h-6zM3 15h6v6H3zm12 0h6v6h-6z"/></svg></button><button id="help-open" class="icon-button" aria-label="探索操作说明">?</button></nav>
+  </header>
+  <div class="vertical-caption" aria-hidden="true">A PERSONAL COLLECTION OF POSSIBILITIES — EXPLORE WITHOUT LIMITS</div>
+  <section class="scene-heading" aria-live="polite"><div class="eyebrow"><span class="short-line"></span><span id="scene-eyebrow">00 / ORBITAL ATRIUM</span></div><h1 id="scene-title">PLAY<span class="title-outline">GROUND</span><span class="title-star">✳</span></h1><div class="scene-sub"><span id="scene-chinese">想象，无须边界。</span><p id="scene-description">在秩序的边缘，寻找想象的入口。</p></div><button id="explore" class="primary-action">开始探索 <span>↗</span></button><button id="return" class="back-action" hidden>← 返回轨道主馆</button></section>
+  <div id="portal-labels" aria-label="空间入口"></div>
+  <aside class="space-nav" aria-label="展馆目录"><div class="rail-heading"><span>选择一个未知</span><span>SPACES / 03</span></div><div id="space-links"></div><div class="rail-footer"><span class="status-dot"></span>持续生长的个人实验场</div></aside>
+  <div class="world-caption"><span class="crosshair">+</span><span id="world-caption">ORBITAL STATION<br>SECTOR 00 — OPEN ATRIUM</span></div>
+  <footer class="bottom-bar"><div class="coordinates"><span class="status-dot"></span><span id="coordinates">X +000 · Y +000 · Z +000</span></div><div class="gesture-hint"><span>拖动 · 环顾</span><span>滚轮 · 推进</span><span>⇧ 拖动 · 平移</span></div><div class="utility-controls"><button id="roll-left" title="向左翻转 · Q" aria-label="向左翻转">↶</button><button id="roll-right" title="向右翻转 · E" aria-label="向右翻转">↷</button><button id="reset" title="恢复视角 · Home" aria-label="恢复视角">⌖</button><span class="control-separator"></span><button id="motion" aria-label="暂停环境动效" aria-pressed="false">Ⅱ</button><button id="quality" aria-label="画质：均衡">BAL</button><button id="fullscreen" aria-label="全屏探索">⛶</button></div></footer>
+  <div id="viewpoints" aria-label="观察位置"></div>
+  <div id="touch-controls" aria-label="移动控制"><button data-move="forward" aria-label="前进">＋</button><button data-move="backward" aria-label="后退">−</button></div>
+  <div id="toast" role="status"></div><div id="transition" aria-hidden="true"><span id="transition-number">01</span><div><span>TRAVERSING SPACE</span><strong id="transition-name">数字无界</strong><i></i></div></div>
+  <div id="loading"><div class="loader-mark">S / P</div><span>正在构筑空间</span><div class="load-line"></div></div>
+  <div id="fallback" hidden><h2>三维空间暂时无法启动</h2><p>请使用支持 WebGL 2 的浏览器并开启硬件加速，然后重新载入。展馆目录和作品索引仍可查看。</p><button onclick="location.reload()">重新载入</button></div>
+</main>
+<dialog id="map-dialog"><div class="dialog-top"><span>SPATIAL DIRECTORY / 展馆地图</span><button class="dialog-close" aria-label="关闭展馆地图">×</button></div><h2>通往别处。</h2><p class="dialog-intro">选择坐标，即刻抵达。每个空间，都是另一种可能。</p><div id="map-spaces"></div><div class="dialog-note">04 个空间 <span>·</span> 00 件作品 <span>·</span> 持续构建中</div></dialog>
+<dialog id="collection-dialog"><div class="dialog-top"><span>PERSONAL WORKS / 自制作品集</span><button class="dialog-close" aria-label="关闭作品索引">×</button></div><h2>想象的存档。</h2><p class="dialog-intro">这里收录我亲手创造的网页、视觉与交互实验。</p><label class="search"><span>⌕</span><input id="search" type="search" placeholder="寻找一件作品…" aria-label="搜索作品"><span>↵</span></label><div id="categories" role="group" aria-label="作品分类"></div><div id="works"></div></dialog>
+<dialog id="help-dialog"><div class="dialog-top"><span>EXPLORER'S GUIDE / 探索指南</span><button class="dialog-close" aria-label="关闭探索指南">×</button></div><h2>让好奇心带路。</h2><div class="help-grid"><p><kbd>拖动</kbd><span>自由环顾 · 可越过头顶翻转</span></p><p><kbd>滚轮 / 双指捏合</kbd><span>靠近与远离</span></p><p><kbd>Shift + 拖动 / 双指拖动</kbd><span>上下左右平移</span></p><p><kbd>W A S D</kbd><span>在空间中前后左右移动</span></p><p><kbd>R / F</kbd><span>上升 / 下降</span></p><p><kbd>Q / E</kbd><span>左右滚转视角</span></p><p><kbd>Home / ⌖</kbd><span>恢复当前空间的初始视角</span></p><p><kbd>Esc</kbd><span>关闭面板</span></p></div><p class="dialog-note">点击空间入口或右侧目录穿行。迷路时，打开地图即可重新定位。</p></dialog>
+<noscript><div class="no-script">空间探索需要开启 JavaScript。</div></noscript><script type="module" src="./app.js"></script>
+</body></html>
